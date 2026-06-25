@@ -6,6 +6,7 @@
   "start_url": "/devotion-app/",
   "scope": "/devotion-app/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#ffffff",
   "theme_color": "#4f46e5",
   "lang": "en",
