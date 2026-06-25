@@ -44,5 +44,12 @@
       "form_factor": "narrow",
       "label": "ChristCounsel AI on mobile"
     }
+    {
+      "src": "/devotion-app/assets/screenshots/screenshot-desktop.png",
+      "sizes": "1280x800",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "ChristCounsel AI on desktop"
+    }
   ]
 }
