@@ -13,7 +13,7 @@
   "icons": [
     {
       "src": "/devotion-app/assets/icons/icon_192x192.png",
-      "sizes": "192x192",
+      "sizes": "480x480",
       "type": "image/png",
       "purpose": "any"
     },
@@ -33,7 +33,7 @@
   "screenshots": [
     {
       "src": "/devotion-app/assets/screenshots/screenshot-mobile.png",
-      "sizes": "390x844",
+      "sizes": "1121x2426",
       "type": "image/png",
       "form_factor": "narrow",
       "label": "ChristCounsel AI on mobile"
