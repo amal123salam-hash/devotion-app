@@ -7,6 +7,15 @@
     <meta name="theme-color" content="#c9a96e">
     <title>ChristCounsel AI</title>
   </head>
+  <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/devotion-app/sw.js')
+        .then(reg => console.log('SW registered:', reg))
+        .catch(err => console.log('SW error:', err));
+    });
+  }
+</script>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
