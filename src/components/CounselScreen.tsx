@@ -11,7 +11,7 @@ interface CounselScreenProps {
 export default function CounselScreen({ userAvatar }: CounselScreenProps) {
   const [situation, setSituation] = useState("");
   const [showSettings, setShowSettings] = useState(false);
-  const [customApiKey, setCustomApiKey] = useState(() => localStorage.getItem("GEMINI_API_KEY") || "");
+  const [customApiKey, setCustomApiKey] = useState(() => localStorage.getItem("HF_API_KEY") || "");
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: "initial",
@@ -85,18 +85,18 @@ export default function CounselScreen({ userAvatar }: CounselScreenProps) {
     const utterance = new SpeechSynthesisUtterance(text);
     // Find a soft, smooth, gentle resonant voice
     const voices = window.speechSynthesis.getVoices();
-    const desiredVoice = voices.find(v => 
-      v.name.toLowerCase().includes("male") || 
-      v.name.toLowerCase().includes("natural") || 
-      v.name.includes("Google US English") || 
+    const desiredVoice = voices.find(v =>
+      v.name.toLowerCase().includes("male") ||
+      v.name.toLowerCase().includes("natural") ||
+      v.name.includes("Google US English") ||
       v.lang.startsWith("en")
     );
     if (desiredVoice) utterance.voice = desiredVoice;
-    
+
     // Configured for a soft, compassionate, and reassuring deliverability
     utterance.rate = 0.80; // Slower rate matching Jesus speaking with extreme kindness and stillness
     utterance.pitch = 0.90; // Slightly lower pitch for a calm, deeply reassuring resonance
-    
+
     utterance.onstart = () => setIsSpeaking(true);
     utterance.onend = () => setIsSpeaking(false);
     utterance.onerror = () => setIsSpeaking(false);
@@ -138,7 +138,7 @@ export default function CounselScreen({ userAvatar }: CounselScreenProps) {
       };
 
       setMessages((prev) => [...prev, pastorResponse]);
-      
+
       // Auto Speech feedback for accessibility and immersion
       if (audioEnabled) {
         // Read pastoral comfort and the prayer
@@ -173,9 +173,9 @@ export default function CounselScreen({ userAvatar }: CounselScreenProps) {
       {/* Header */}
       <header id="counsel_header" className="flex items-center justify-between px-5 pt-4 pb-2 bg-[#F6F5F0]">
         <div id="pastor_profile_badge" className="flex items-center gap-2">
-          <img 
-            id="pastor_profile_img" 
-            src="/src/assets/images/christ_devotional_portrait_1782136426209.jpg" 
+          <img
+            id="pastor_profile_img"
+            src="/src/assets/images/christ_devotional_portrait_1782136426209.jpg"
             alt="Jesus Christ"
             className="w-8 h-8 rounded-full border border-amber-300 object-cover"
           />
@@ -189,8 +189,8 @@ export default function CounselScreen({ userAvatar }: CounselScreenProps) {
         </div>
         <h1 id="counsel_screen_title" className="text-lg font-serif text-[#0e2a1b] font-semibold">Devotion</h1>
         <div className="flex items-center gap-1.5">
-          <button 
-            id="audio_mute_toggle" 
+          <button
+            id="audio_mute_toggle"
             onClick={() => {
               setAudioEnabled(!audioEnabled);
               if (isSpeaking) window.speechSynthesis.cancel();
@@ -201,8 +201,8 @@ export default function CounselScreen({ userAvatar }: CounselScreenProps) {
           >
             {audioEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
           </button>
-          <button 
-            id="settings_gear_btn" 
+          <button
+            id="settings_gear_btn"
             onClick={() => setShowSettings(true)}
             className="p-1 text-stone-500 hover:text-stone-800 rounded-full hover:bg-stone-100"
             title="Spiritual Settings"
@@ -235,7 +235,7 @@ export default function CounselScreen({ userAvatar }: CounselScreenProps) {
 
         {/* Templates suggestions when stream is empty */}
         {messages.length === 1 && (
-          <motion.div 
+          <motion.div
             id="counsel_templates_grid"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -264,7 +264,7 @@ export default function CounselScreen({ userAvatar }: CounselScreenProps) {
         {/* Message Log */}
         <div id="messages_stream" className="space-y-4 min-h-[150px]">
           {messages.map((msg, index) => (
-            <motion.div 
+            <motion.div
               id={`msg_bubble_${msg.id}`}
               key={msg.id}
               initial={{ opacity: 0, y: 15 }}
@@ -283,13 +283,13 @@ export default function CounselScreen({ userAvatar }: CounselScreenProps) {
                 <div id="pastor_chat_bubble" className="bg-white border border-[#eae9e0] rounded-2xl p-5 max-w-[95%] shadow-md text-xs space-y-4 relative overflow-hidden">
                   {/* Heart decoration on left edge */}
                   <div className="absolute top-0 left-0 w-1.5 h-full bg-[#725e2e]" />
-                  
+
                   {/* Mini category tag */}
                   <div id="pastoral_tag" className="flex items-center gap-1.5 text-stone-500 uppercase tracking-widest text-[9px] font-bold">
                     <Heart className="w-3.5 h-3.5 text-[#725e2e] fill-current" />
                     <span className="text-[#725e2e]">DIVINE COMFORT</span>
-                    
-                    <button 
+
+                    <button
                       id={`read_aud_${msg.id}`}
                       onClick={() => {
                         const transcript = `${msg.text}. ${msg.prayer ? "Listen as I pray to you: " + msg.prayer : ""}`;
@@ -389,15 +389,15 @@ export default function CounselScreen({ userAvatar }: CounselScreenProps) {
                 id="voice_record_btn"
                 onClick={toggleRecording}
                 className={`w-10 h-10 rounded-full flex items-center justify-center border transition-all ${
-                  isRecording 
-                    ? "bg-red-500 border-red-500 text-white animate-pulse" 
+                  isRecording
+                    ? "bg-red-500 border-red-500 text-white animate-pulse"
                     : "bg-white border-stone-200 text-amber-900 hover:bg-stone-50"
                 }`}
                 title={speechSupported ? "Speak your prayer" : "Speech not supported in this frame"}
               >
                 {isRecording ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
               </button>
-              
+
               {isRecording && (
                 <span className="text-[10px] text-red-500 font-semibold animate-pulse font-mono">
                   Listening to voice...
@@ -411,8 +411,8 @@ export default function CounselScreen({ userAvatar }: CounselScreenProps) {
               onClick={() => handleShareConcern()}
               disabled={isLoading || !situation.trim()}
               className={`px-5 py-2.5 rounded-full font-sans text-stone-100 font-medium text-xs flex items-center gap-1.5 transition-all focus:outline-none ${
-                situation.trim() 
-                  ? "bg-[#0b0c0c] hover:bg-stone-800" 
+                situation.trim()
+                  ? "bg-[#0b0c0c] hover:bg-stone-800"
                   : "bg-stone-300 pointer-events-none text-stone-100"
               }`}
             >
@@ -433,7 +433,7 @@ export default function CounselScreen({ userAvatar }: CounselScreenProps) {
       <AnimatePresence>
         {showSettings && (
           <div id="settings_modal_backdrop" className="absolute inset-0 bg-black/60 z-50 flex items-end justify-center">
-            <motion.div 
+            <motion.div
               id="settings_modal_body"
               initial={{ y: "100%" }}
               animate={{ y: 0 }}
@@ -446,7 +446,7 @@ export default function CounselScreen({ userAvatar }: CounselScreenProps) {
                   <Settings className="w-5 h-5 text-amber-800" />
                   <span className="font-serif font-bold text-stone-900 text-sm">Spiritual Settings</span>
                 </div>
-                <button 
+                <button
                   id="close_settings_btn"
                   onClick={() => setShowSettings(false)}
                   className="p-1 text-stone-500 hover:text-stone-950 transition-colors"
@@ -457,24 +457,24 @@ export default function CounselScreen({ userAvatar }: CounselScreenProps) {
 
               <div className="space-y-3">
                 <label className="text-[10px] font-mono tracking-widest text-[#725e22] uppercase font-bold block">
-                  Gemini API Key
+                  Hugging Face API Key
                 </label>
                 <p className="text-[10px] text-stone-500 font-sans leading-relaxed">
-                  Provide your own Google Gemini API key. Calls will be made directly to the Gemini endpoint securely from your browser/app.
+                  Provide your own Hugging Face API key. Calls will be made directly to the Hugging Face Inference API securely from your browser/app.
                 </p>
                 <div className="flex gap-2">
-                  <input 
+                  <input
                     type="password"
                     value={customApiKey}
                     onChange={(e) => setCustomApiKey(e.target.value)}
-                    placeholder="AIzaSy..."
+                    placeholder="hf_..."
                     className="flex-1 text-xs font-semibold p-2.5 bg-white border border-stone-200 rounded-xl focus:border-[#725e22] focus:outline-none"
                   />
                 </div>
                 <div className="flex justify-end gap-2 pt-2">
                   <button
                     onClick={() => {
-                      localStorage.setItem("GEMINI_API_KEY", customApiKey);
+                      localStorage.setItem("HF_API_KEY", customApiKey);
                       setShowSettings(false);
                     }}
                     className="px-4 py-2 bg-[#0b0c0c] hover:bg-stone-800 text-stone-100 font-medium text-[11px] rounded-xl transition-all"

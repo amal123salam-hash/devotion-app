@@ -9,7 +9,7 @@
   "display_override": ["window-controls-overlay", "standalone", "browser"],
   "orientation": "portrait",
   "background_color": "#ffffff",
-  "theme_color": "#4f46e5",
+  "theme_color": "#1a1a2e",
   "lang": "en",
   "dir": "ltr",
   "categories": ["education", "lifestyle", "spirituality"],
@@ -65,22 +65,26 @@
   ],
   "icons": [
     {
+      "src": "/devotion-app/assets/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "/devotion-app/assets/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
       "src": "/devotion-app/assets/icons/icon_192x192.png",
       "sizes": "480x480",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
       "src": "/devotion-app/assets/icons/icon-512x512.png",
       "sizes": "1280x1280",
       "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/devotion-app/assets/icons/icon-512x512.png",
-      "sizes": "1280x1280",
-      "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ],
   "screenshots": [
