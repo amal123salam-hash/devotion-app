@@ -13,28 +13,29 @@ export async function getPastoralCounsel(situation: string, customApiKey?: strin
     throw new Error("Hugging Face API key is not configured. Please add your key in the settings (top-right icon).");
   }
 
-  const model = "google/flan-t5-base"; // Using a smaller instruction-tuned model
+  // Using a more capable model for varied, context-aware responses
+  const model = "mistralai/Mistral-7B-Instruct-v0.3";
   const endpoint = `https://api-inference.huggingface.co/models/${model}`;
 
-  const prompt = `You are ChristCounsel, a compassionate and wise pastoral guide speaking in a soft, smooth, comforting Christian tone.
-A person comes to you with the following concern/situation: "${situation}".
+  // Create a unique prompt with context to ensure varied responses
+  const prompt = `[INST] You are ChristCounsel, a compassionate and wise pastoral guide speaking in a soft, smooth, comforting Christian tone.
+A person comes to you with this specific concern: "${situation}"
 
-Please provide a response that is split into exactly three parts:
-1. "comfort": Compassionate counseling words quoting appropriate Holy Scripture, explaining it with grace, and concluding with: "Don't fear, I am with you."
-2. "verses": An array of one or more relevant Bible scripture verses referenced in your response, with the reference (e.g. "Psalm 23:1") and text.
-3. "prayer": A short, comforting, beautiful personal prayer written on behalf of the person.
+Provide a PERSONALIZED response tailored specifically to their situation. Do not give generic advice.
+Your response MUST be split into exactly three parts in valid JSON:
+1. "comfort": Personalized pastoral words that directly address their specific concern, quoting appropriate Holy Scripture, explaining it with grace, and concluding with: "Don't fear, I am with you."
+2. "verses": An array of 2-3 relevant Bible scripture verses SPECIFIC TO THEIR SITUATION, each with reference (e.g. "Psalm 23:1") and full text.
+3. "prayer": A short, personal, beautiful prayer written SPECIFICALLY for their concern.
 
-You MUST respond strictly in the following JSON format (and nothing else):
+Respond ONLY with valid JSON, no extra text:
 {
-  "comfort": "pastoral words...",
+  "comfort": "personalized pastoral words addressing their specific concern... Don't fear, I am with you.",
   "verses": [
-    {
-      "reference": "Bible verse reference",
-      "text": "Full verse text"
-    }
+    {"reference": "Specific verse reference", "text": "Full verse text"},
+    {"reference": "Another relevant verse", "text": "Full verse text"}
   ],
-  "prayer": "short prayer..."
-}`;
+  "prayer": "personalized prayer for their specific situation..."
+} [/INST]`;
 
   try {
     const response = await fetch(endpoint, {
@@ -46,8 +47,10 @@ You MUST respond strictly in the following JSON format (and nothing else):
       body: JSON.stringify({
         inputs: prompt,
         parameters: {
-          max_new_tokens: 500,
-          temperature: 0.7,
+          max_new_tokens: 800,
+          temperature: 0.85,
+          top_p: 0.95,
+          repetition_penalty: 1.1,
           return_full_text: false,
         },
       }),
